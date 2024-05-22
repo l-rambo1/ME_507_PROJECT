@@ -1,0 +1,35 @@
+\doxysection{motor\+\_\+driver.\+h}
+\hypertarget{motor__driver_8h_source}{}\label{motor__driver_8h_source}\index{/Users/lucasrambo/Documents/ME 507/STM32CubeIDE/workspace\_1.15.0/Lab\_3/Core/Inc/motor\_driver.h@{/Users/lucasrambo/Documents/ME 507/STM32CubeIDE/workspace\_1.15.0/Lab\_3/Core/Inc/motor\_driver.h}}
+\mbox{\hyperlink{motor__driver_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ INC\_MOTOR\_DRIVER\_H\_}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ INC\_MOTOR\_DRIVER\_H\_}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}stm32f4xx\_hal.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Motor\ object\ data\ structure}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00024\ \ \ \ \ int32\_t\ \ duty;}
+\DoxyCodeLine{00025\ \ \ \ \ TIM\_HandleTypeDef\ *timer;}
+\DoxyCodeLine{00026\ \ \ \ \ uint32\_t\ channel1;}
+\DoxyCodeLine{00027\ \ \ \ \ uint32\_t\ channel2;}
+\DoxyCodeLine{00028\ \}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structmotor__t}{motor\_t}};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ Prototype\ for\ motor\ object\ "{}method"{}}}
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{void}\ set\_duty(\mbox{\hyperlink{structmotor__t}{motor\_t}}*\ p\_mot,\ \ int32\_t\ duty);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keywordtype}{void}\ enable(\mbox{\hyperlink{structmotor__t}{motor\_t}}*\ p\_mot);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{void}\ disable(\mbox{\hyperlink{structmotor__t}{motor\_t}}*\ p\_mot);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ INC\_MOTOR\_DRIVER\_H\_\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ }
+
+\end{DoxyCode}

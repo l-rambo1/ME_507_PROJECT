@@ -1,0 +1,53 @@
+\doxysection{/\+Users/lucasrambo/\+Documents/\+ME 507/\+STM32\+Cube\+IDE/workspace\+\_\+1.15.0/\+Lab\+\_\+3/\+Core/\+Src/motor\+\_\+driver.c File Reference}
+\hypertarget{motor__driver_8c}{}\label{motor__driver_8c}\index{/Users/lucasrambo/Documents/ME 507/STM32CubeIDE/workspace\_1.15.0/Lab\_3/Core/Src/motor\_driver.c@{/Users/lucasrambo/Documents/ME 507/STM32CubeIDE/workspace\_1.15.0/Lab\_3/Core/Src/motor\_driver.c}}
+
+
+This is the file containing the motor driver class.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include "{}string.\+h"{}}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include "{}motor\+\_\+driver.\+h"{}}\newline
+{\ttfamily \#include "{}stm32f4xx\+\_\+hal.\+h"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include "{}stm32f411xe.\+h"{}}\newline
+{\ttfamily \#include "{}stm32f4xx\+\_\+hal\+\_\+uart.\+h"{}}\newline
+{\ttfamily \#include "{}stm32f4xx\+\_\+hal\+\_\+rcc.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{motor__driver_8c_a391fa1e490bd712720989b58fa0d9904}\label{motor__driver_8c_a391fa1e490bd712720989b58fa0d9904} 
+\#define {\bfseries PWM\+\_\+\+MAX}~3999
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{motor__driver_8c_adcde1cd0aa97d50c0b1136c125b5ae10}\label{motor__driver_8c_adcde1cd0aa97d50c0b1136c125b5ae10} 
+void {\bfseries set\+\_\+duty} (\mbox{\hyperlink{structmotor__t}{motor\+\_\+t}} \texorpdfstring{$\ast$}{*}p\+\_\+mot, int32\+\_\+t duty)
+\item 
+\Hypertarget{motor__driver_8c_a87e0de30f5044f896afc5ddaeff0f632}\label{motor__driver_8c_a87e0de30f5044f896afc5ddaeff0f632} 
+void {\bfseries enable} (\mbox{\hyperlink{structmotor__t}{motor\+\_\+t}} \texorpdfstring{$\ast$}{*}p\+\_\+mot)
+\item 
+\Hypertarget{motor__driver_8c_a5f5eeae83ea21ae12701b0c0b78e691f}\label{motor__driver_8c_a5f5eeae83ea21ae12701b0c0b78e691f} 
+void {\bfseries disable} (\mbox{\hyperlink{structmotor__t}{motor\+\_\+t}} \texorpdfstring{$\ast$}{*}p\+\_\+mot)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{motor__driver_8c_ad13e5acf9ac6c3b55d6dbb75b47da2d7}\label{motor__driver_8c_ad13e5acf9ac6c3b55d6dbb75b47da2d7} 
+float {\bfseries compare\+\_\+value}
+\item 
+\Hypertarget{motor__driver_8c_ada1cd06e33cfd221862684d3c7a1fa9f}\label{motor__driver_8c_ada1cd06e33cfd221862684d3c7a1fa9f} 
+int {\bfseries duty}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is the file containing the motor driver class. 
+
+
+\begin{DoxyItemize}
+\item Created on\+: Apr 18, 2024 Author\+: Lucas Rambo 
+\end{DoxyItemize}

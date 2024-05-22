@@ -1,0 +1,45 @@
+\doxysection{reciever.\+h}
+\hypertarget{reciever_8h_source}{}\label{reciever_8h_source}\index{/Users/lucasrambo/Documents/ME 507/STM32CubeIDE/workspace\_1.15.0/Lab\_3/Core/Inc/reciever.h@{/Users/lucasrambo/Documents/ME 507/STM32CubeIDE/workspace\_1.15.0/Lab\_3/Core/Inc/reciever.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ reciever.h}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ \ Created\ on:\ May\ 19,\ 2024}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ \ \ \ \ \ Author:\ lucasrambo}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ INC\_RECIEVER\_H\_}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ INC\_RECIEVER\_H\_}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ includes}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}stm32f4xx\_hal.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ receiver\ object\ data\ structure}}
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ TIM\_HandleTypeDef\ *timer;}
+\DoxyCodeLine{00022\ \ \ \ \ uint32\_t\ channel1;}
+\DoxyCodeLine{00023\ \ \ \ \ uint32\_t\ channel2;}
+\DoxyCodeLine{00024\ \}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structreciever__t}{reciever\_t}};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keywordtype}{void}\ HAL\_TIM\_IC\_CaptureCallback\ (\mbox{\hyperlink{structreciever__t}{reciever\_t}}*\ p\_rec);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keywordtype}{void}\ pulse\_width(\mbox{\hyperlink{structreciever__t}{reciever\_t}}*\ p\_rec);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ INC\_RECIEVER\_H\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}
