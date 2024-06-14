@@ -27,6 +27,11 @@
 #include "stm32f411xe.h"
 #include "stm32f4xx_hal_uart.h"
 #include "stm32f4xx_hal_rcc.h"
+#include <stdbool.h>
+#include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal_i2c.h"
+#include "encoder_driver.h"
+#include "encoder_return.h"
 
 /* USER CODE END Includes */
 
@@ -49,6 +54,9 @@ float   actuation_pwm;
 float   actuation_acc;
 float   actuation_acc_prev;
 float actuation_pwm_prev;
+
+#define AS5600_Angle_118    0x0E // addresses for angle readings
+#define AS5600_Angle_70     0x0F
 
 uint32_t i;
 uint32_t count;
@@ -94,6 +102,14 @@ float pos_error;
 float kp;
 float kd;
 float e_sum;
+
+// servo variables
+int PWM_DC1 = 4538; // 1.5 ms pulse (stopped)
+uint16_t channel;
+uint16_t ch1_strt;
+uint16_t ch1_end;
+uint16_t ch1_pwm;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -151,6 +167,17 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_1);
   HAL_I2C_Init(&hi2c2);
+  HAL_I2C_Init(&hi2c1); // init I2C for encoder
+
+  HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_1); // initialize servo PWM
+
+  HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_1); // remote input
+  HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_2);
+
+
+  __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, PWM_DC1); // set the servo compare value
+
+  memset(buffer, ' ', 30);
 
 
   //testing stuff
@@ -217,6 +244,27 @@ pos_setpoint=0;
 actuation_acc_prev=160000;
 actuation_pwm_prev=0;
 
+//encoder variables
+char buffer [50];
+int n;
+int counter = 0;
+int multiple = 30000; // common denominator used for UART output timing
+int enc_angle = 0;
+int I2C_Encoder [2];
+int angle_init = 0;
+
+// Make a servo object
+
+        motor_t servo = {
+       		 	 	 .duty    = 0,
+   					 .timer = &htim4,
+   					 .channel1 = TIM_CHANNEL_1};
+
+        servo_t servo1 = {
+       		 	 	 .angle    = 0,
+   					 .timer = &htim4,
+   					 .channel1 = TIM_CHANNEL_1};
+
 
   /* USER CODE END 2 */
 
@@ -268,12 +316,69 @@ actuation_pwm_prev=0;
   	 n=sprintf(transmit_buff,"PWM: %ld\n\r",(int32_t)actuation_acc);
   	  	 	HAL_UART_Transmit(&huart2, (uint8_t *) &transmit_buff, n, HAL_MAX_DELAY); //transmit the read data
 
+  	 //encoder code
+  	 //HAL_StatusTypeDef status = HAL_I2C_IsDeviceReady(&hi2c1, 0x36 << 1, 3, HAL_MAX_DELAY);
+  	 HAL_I2C_Mem_Read(&hi2c1,0x36 << 1, AS5600_Angle_70, I2C_MEMADD_SIZE_8BIT, (uint8_t*) I2C_Encoder, 2, 100);
+  	 enc_angle = I2C_Encoder[0] << 8 | I2C_Encoder[1] - angle_init;
+  	 set_duty(&servo, ch1_pwm); // encoder duty input
 
+  	 if (counter % multiple == 0) // used for display message timing
+
+  	 {
+  	 	  n = sprintf(buffer, "Angle = %d \n\r", enc_angle); //pwm message
+  	 	  HAL_UART_Transmit(&huart2, (uint8_t *) buffer, n, 200);
+  	 	  n = sprintf(buffer, "Duty = %d us\n\r", ch1_pwm); //pwm message
+  	 	  HAL_UART_Transmit(&huart2, (uint8_t *) buffer, n, 200);
+  	 }
+
+  	 else if (counter == 10)
+  	 {
+  	 	  angle_init = I2C_Encoder[0] << 8 | I2C_Encoder[1];
+  	 }
+  	 else if (ch1_pwm > 1510 && ch1_pwm < 1520) // if basically no input
+  	 {
+  	 	  encoder_return(&servo1, enc_angle);
+  	 }
+
+  	 counter = counter+1;
 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+  } // end of while
+} //end of main
+
+void HAL_TIM_IC_CaptureCallback (TIM_HandleTypeDef * htim)
+
+{
+
+     // get active channel to see what triggered the interrupt
+    channel = HAL_TIM_GetActiveChannel (htim);
+    if (channel == HAL_TIM_ACTIVE_CHANNEL_1) // if reads forward press
+     {
+         ch1_strt = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
+     }
+    else if (channel == HAL_TIM_ACTIVE_CHANNEL_2) // if read reverse press
+    {
+    	ch1_end = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
+    	ch1_pwm = ch1_end - ch1_strt;
+    	if (ch1_pwm > 65536/2) // overflow correction
+    	{
+    		ch1_pwm = 65536 + 1 - ch1_strt + ch1_end;
+    	}
+    	else if (ch1_pwm < -65536/2) // underflow correction
+    	{
+    		ch1_pwm = -1*(65536 + 1 - ch1_strt + ch1_end);
+    	}
+    	else if (ch1_pwm < -15000) // ignore erroneous values
+    	{
+
+    	}
+    	else if (ch1_pwm > 15000) // ignore erroneous values
+    	{
+
+    	}
+    }
   /* USER CODE END 3 */
 }
 
